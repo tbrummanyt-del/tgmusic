@@ -21,3 +21,16 @@ async def play(_, message):
     ydl_opts = {'format': 'bestaudio'}
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(f"ytsearch:{query}", download=False)['entries'][0]
+        url = info['url']
+
+    await call.join_group_call(
+        message.chat.id,
+        AudioPiped(url)
+    )
+
+    await message.reply(f"🎶 Playing: {info['title']}")
+
+app.start()
+call.start()
+print("Bot Running 🔥")
+app.idle()
